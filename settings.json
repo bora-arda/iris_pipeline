@@ -1,0 +1,19 @@
+{
+  "general": {
+    "random_state": 7,
+    "datetime_format": "%d.%m.%Y_%H.%M",
+    "data_dir": "data/",
+    "models_dir": "models/",
+    "results_dir": "data/predictions"
+  },
+
+  "train": {
+    "data_table": "train.csv",
+    "test_size": 0.2,
+    "batch_size": 32,
+    "hidden_dim": 128,
+    "dropout": 0.3,
+    "learning_rate": 0.001,
+    "epoch": 100
+  }
+}
