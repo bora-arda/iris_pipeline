@@ -2,18 +2,24 @@
   "general": {
     "random_state": 7,
     "datetime_format": "%d.%m.%Y_%H.%M",
-    "data_dir": "data/",
-    "models_dir": "models/",
-    "results_dir": "data/predictions"
+    "raw_data_dir": "data/raw/",
+    "processed_data_dir": "data/processed/",
+    "predictions_dir": "data/predictions/",
+    "models_dir": "models/"
   },
 
   "train": {
     "data_table": "train.csv",
+    "model_name": "iris_model.pt",
     "test_size": 0.2,
     "batch_size": 32,
     "hidden_dim": 128,
     "dropout": 0.3,
     "learning_rate": 0.001,
-    "epoch": 100
+    "epochs": 100
+  },
+
+  "inference": {
+    "data_table": "inference.csv"
   }
 }

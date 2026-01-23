@@ -1,6 +1,5 @@
 .venv/
 .vscode/
 ENV/
-.env/
-data/*
 *__pycache__/
+models/

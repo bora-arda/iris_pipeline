@@ -4,21 +4,26 @@ from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import numpy as np
 import logging
-from utils import setup_logger
+import os
+from utils import setup_logger, load_settings, seed_everything
 
+config = load_settings("settings.json")
 setup_logger()
 logger = logging.getLogger(__name__)
+
+# Initially defining seeds to make model deterministic
+seed_everything(7)
 
 def download_dataset():
     logger.info("Downloading Iris dataset")
     df = load_iris(as_frame=True)['frame']
     try:
-        df.to_csv("data/raw/iris.csv")
+        df.to_csv(f"{config['general']['raw_data_dir']}iris.csv")
         logger.info(f"Loaded dataset with {len(df)} rows and {df.shape[1]} columns")
     except Exception as e:
         print(e)
 
-def split_dataset(random_state = 7, test_size = 0.2):
+def split_dataset(random_state = config["general"]["random_state"], test_size = config["train"]["test_size"]):
     logger.info("Loading dataset")
     X, y = load_iris(return_X_y = True)
     logger.info("Dataset Loaded")
@@ -50,7 +55,7 @@ def split_dataset(random_state = 7, test_size = 0.2):
 
     return train_df, inference_df
 
-def save_dataframes(train_df: pd.DataFrame, inference_df: pd.DataFrame, save_folder: str):
+def save_dataframes(train_df: pd.DataFrame, inference_df: pd.DataFrame, save_folder: str = config["general"]["processed_data_dir"]):
     """
     Saves created dataframes locally
     
@@ -64,17 +69,18 @@ def save_dataframes(train_df: pd.DataFrame, inference_df: pd.DataFrame, save_fol
     
     # Save locally as csv files
     logger.info("Saving dataframes.")
+    train_data_table = os.path.join(save_folder, config['train']['data_table'])
+    inference_data_table = os.path.join(save_folder, config['inference']['data_table'])
+    train_df.to_csv(f"{train_data_table}", index=False)
+    inference_df.to_csv(f"{inference_data_table}", index=False)
     
-    train_df.to_csv(f"{save_folder}/train.csv", index=False)
-    inference_df.to_csv(f"{save_folder}/inference.csv", index=False)
-    
-    logger.info(f"Dataset saved as train.csv and inference.csv inside {save_folder} folder.")
+    logger.info(f"Dataset saved as {config['train']['data_table']} and {config['inference']['data_table']} inside {save_folder} folder.")
 
 def main():
     try:
         download_dataset()
         train_df, inference_df = split_dataset()
-        save_dataframes(train_df, inference_df, "data/processed")
+        save_dataframes(train_df, inference_df)
         
         logger.info("Preparation Pipeline completed successfully.")
     except Exception as e:
