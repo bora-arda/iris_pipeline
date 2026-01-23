@@ -5,14 +5,11 @@ import pandas as pd
 import numpy as np
 import logging
 import os
-from utils import setup_logger, load_settings, seed_everything
+from utils import setup_logger, load_settings
 
 config = load_settings("settings.json")
 setup_logger()
 logger = logging.getLogger(__name__)
-
-# Initially defining seeds to make model deterministic
-seed_everything(7)
 
 def download_dataset():
     logger.info("Downloading Iris dataset")

@@ -5,12 +5,10 @@ from training.model import IrisModel
 from training.dataset import IrisDataset
 import logging
 import os
-from utils import load_settings, setup_logger, seed_everything
+from utils import load_settings, setup_logger
 setup_logger()
 logger = logging.getLogger(__name__)
 
-# Initially defining seeds to make model deterministic
-seed_everything(7)
 class IrisTrainer:
     def __init__(self, settings_path = "settings.json"):
         # Load settings
@@ -57,9 +55,11 @@ class IrisTrainer:
         logger.info(f"Running model on {self.device}")
         
     def train(self):
+        average_loss = 0.0
         for epoch in range(self.epochs):
             self.model.train()
             total_loss = 0.0
+            train_loss = 0.0
             
             for X, y in self.data_loader:
                 X = X.to(self.device)
@@ -74,11 +74,12 @@ class IrisTrainer:
                 
                 total_loss = loss.item()
                 
-            average_loss = total_loss / len(self.data_loader)
-            logger.info(f"Epoch [{epoch + 1} / {self.epochs}] - Loss: {average_loss:.4f}")
+            train_loss = total_loss / len(self.data_loader)
+            logger.info(f"Epoch [{epoch + 1} / {self.epochs}] - Loss: {train_loss:.4f}")
+            average_loss += train_loss
 
-            self.save_model()
-            logger.info(f"New best model (avg loss={average_loss:.4f}) saved to {self.model_path} ")
+        self.save_model()
+        logger.info(f"New best model (avg loss={average_loss / self.epochs:.4f}) saved to {self.model_path} ")
             
     def save_model(self):
         save_dir = Path(self.model_dir)

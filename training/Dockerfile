@@ -1,15 +1,14 @@
-FROM python:3.11-slim
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
 
 WORKDIR /app
 
-# Install dependencies directly
 COPY requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy rest of the code
 COPY . .
 
-CMD python -m scripts.prepare_data && python -m training.train
+RUN python -m scripts.prepare_data
+RUN mkdir -p models
+
+CMD ["python", "-m" , "training.train"]

@@ -1,5 +1,4 @@
 .venv/
 .vscode/
-ENV/
 *__pycache__/
 models/
