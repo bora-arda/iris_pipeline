@@ -10,11 +10,8 @@ __pycache__/
 *.pyo
 *.pyd
 *.ipynb
+.pytest_cache/
 
-# Ignore local data/models
-data/*.csv
-models/*.pt
-models/
 # Ignore Git and IDE settings
 .git/
 .vscode/
@@ -23,4 +20,5 @@ models/
 # Ignore Dockerfiles
 Dockerfile
 .dockerignore
+*.dockerignore
 docker-compose.yml

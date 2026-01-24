@@ -1,4 +1,20 @@
+# Ignore the Python virtual environment
 .venv/
-.vscode/
 *__pycache__/
-models/
+
+# Ignore compiled Python files
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.ipynb
+.pytest_cache/
+.pytest_cache/
+iris_ml_pipeline.egg-info/
+models/*.pt
+
+# Ignore Git and IDE settings
+.git/
+.vscode/
+.idea/

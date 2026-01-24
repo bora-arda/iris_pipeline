@@ -1,0 +1,27 @@
+# Ignore the Python virtual environment
+venv/
+.venv/
+env/
+
+# Ignore compiled Python files
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.ipynb
+.pytest_cache/
+
+# Ignore local data/models
+data/*.csv
+models/*.pt
+models/
+# Ignore Git and IDE settings
+.git/
+.vscode/
+.idea/
+
+# Ignore Dockerfiles
+Dockerfile
+.dockerignore
+docker-compose.yml

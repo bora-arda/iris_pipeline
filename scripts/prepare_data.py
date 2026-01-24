@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import logging
 import os
-from utils import setup_logger, load_settings
+from core.utils import setup_logger, load_settings
 
 config = load_settings("settings.json")
 setup_logger()

@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iris_ml_pipeline"
+version = "0.1.0"
+description = "Iris ML training and inference project"
+
+[tool.setuptools.packages.find]
+where = ["."]

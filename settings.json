@@ -20,6 +20,7 @@
   },
 
   "inference": {
-    "data_table": "inference.csv"
+    "data_table": "inference.csv",
+    "pred_table": "predictions.csv"
   }
 }

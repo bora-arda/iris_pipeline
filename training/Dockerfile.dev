@@ -1,0 +1,35 @@
+FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY core/ core/
+COPY training/ training/
+COPY requirements.txt .
+COPY settings.json .
+COPY scripts/ scripts/
+COPY __init__.py .
+COPY tests/__init__.py tests/__init__.py
+COPY tests/test_data.py tests/test_data.py
+COPY tests/test_utils.py tests/test_utils.py
+COPY tests/test_training.py tests/test_training.py
+COPY pyproject.toml .
+
+RUN mkdir -p data/processed data/raw models
+RUN pip install -e .
+
+# Create entrypoint script
+RUN echo '#!/bin/bash\n\
+set -e\n\
+echo "Preparing data..."\n\
+python -m scripts.prepare_data\n\
+echo "Running tests..."\n\
+pytest tests/\n\
+echo "Starting training..."\n\
+exec "$@"' > /entrypoint.sh && chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["python", "-m" , "training.train"]

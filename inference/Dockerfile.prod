@@ -1,0 +1,22 @@
+FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY core/ core/
+COPY inference/ inference/
+COPY settings.json .
+COPY models/ models/
+COPY data/ data/
+COPY tests/__init__.py tests/__init__.py
+COPY tests/test_inference.py tests/test_inference.py
+COPY pyproject.toml .
+
+
+RUN mkdir -p data/predictions
+RUN pip install -e .
+RUN pytest tests/
+
+CMD ["python", "-m" , "inference.inference"]
