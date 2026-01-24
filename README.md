@@ -197,7 +197,7 @@ The inference pipeline will:
 
     ```bash
     python -m scripts.prepare_data
-        ```
+    ```
 
 4. Run tests:
 
