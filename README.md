@@ -113,7 +113,7 @@ After training is complete, copy the trained model and run inference:
 
 ```bash
 # Build the training image
-docker build -f training/Dockerfile.prod -t iris-inference .
+docker build -f inference/Dockerfile.prod -t iris-inference .
 ```
 
 Windows Powershell:
